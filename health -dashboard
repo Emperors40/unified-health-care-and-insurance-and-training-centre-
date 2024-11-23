@@ -1,0 +1,60 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+export default function HealthDashboard() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">Health Dashboard</h1>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle>Heart Rate</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">72 bpm</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Blood Pressure</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">120/80 mmHg</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Steps Today</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">8,547</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Sleep</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">7h 30m</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Calories Burned</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">2,350 kcal</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Stress Level</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">Low</p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
