@@ -1,0 +1,84 @@
+'use client'
+
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+export default function Insurance() {
+  const [age, setAge] = useState(30)
+  const [healthScore, setHealthScore] = useState(70)
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+
+  const calculatePremium = () => {
+    const basePremium = 10000
+    const ageFactor = age / 30
+    const healthFactor = (100 - healthScore) / 50
+    return Math.round(basePremium * ageFactor * (1 + healthFactor))
+  }
+
+  const handleSubscribe = () => {
+    if (email) {
+      setSubscribed(true)
+    }
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">AI-Powered Healthcare Insurance</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>Personalized Insurance Quote</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="age">Age: {age}</Label>
+              <Slider
+                id="age"
+                min={18}
+                max={80}
+                step={1}
+                value={[age]}
+                onValueChange={(value) => setAge(value[0])}
+              />
+            </div>
+            <div>
+              <Label htmlFor="healthScore">Health Score: {healthScore}</Label>
+              <Slider
+                id="healthScore"
+                min={0}
+                max={100}
+                step={1}
+                value={[healthScore]}
+                onValueChange={(value) => setHealthScore(value[0])}
+              />
+            </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Premium: ₦{calculatePremium()}/year</p>
+            </div>
+            {!subscribed ? (
+              <Button onClick={handleSubscribe}>Subscribe</Button>
+            ) : (
+              <p className="text-green-600">Thank you for subscribing!</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
