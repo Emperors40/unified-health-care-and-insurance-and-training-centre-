@@ -1,0 +1,83 @@
+'use client'
+
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Textarea } from '@/components/ui/textarea'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+export default function Printer() {
+  const [prompt, setPrompt] = useState('')
+  const [size, setSize] = useState(200)
+  const [resolution, setResolution] = useState(100)
+  const [generatedDesign, setGeneratedDesign] = useState('')
+
+  const handleGenerate = () => {
+    if (prompt) {
+      setGeneratedDesign(`AI-generated 3D printer design based on your specifications:
+        - Prompt: ${prompt}
+        - Size: ${size}mm
+        - Resolution: ${resolution} microns
+        CAD files are ready for download and VR preview.`)
+    }
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">AI 3D Printer Design for Healthcare</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>Design Your 3D Printer</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="prompt">Describe your desired 3D printer</Label>
+              <Textarea
+                id="prompt"
+                placeholder="Enter your description here..."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+              />
+            </div>
+            <div>
+              <Label htmlFor="size">Print Size: {size}mm</Label>
+              <Slider
+                id="size"
+                min={100}
+                max={500}
+                step={10}
+                value={[size]}
+                onValueChange={(value) => setSize(value[0])}
+              />
+            </div>
+            <div>
+              <Label htmlFor="resolution">Print Resolution: {resolution} microns</Label>
+              <Slider
+                id="resolution"
+                min={20}
+                max={200}
+                step={5}
+                value={[resolution]}
+                onValueChange={(value) => setResolution(value[0])}
+              />
+            </div>
+            <Button onClick={handleGenerate}>Generate 3D Printer Design</Button>
+            {generatedDesign && (
+              <div className="mt-4 p-4 bg-muted rounded">
+                <p className="whitespace-pre-wrap">{generatedDesign}</p>
+                <div className="mt-4 space-x-2">
+                  <Button onClick={() => alert('Downloading CAD files...')}>Download CAD Files</Button>
+                  <Button onClick={() => alert('Opening VR preview...')}>View in VR</Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
