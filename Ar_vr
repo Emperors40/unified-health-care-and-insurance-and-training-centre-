@@ -1,0 +1,39 @@
+'use client'
+
+import { useState } from 'react'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
+
+export default function ThreeDPrinterCreation() {
+  const [prompt, setPrompt] = useState('')
+  const [generatedDesign, setGeneratedDesign] = useState('')
+
+  const handleGenerate = () => {
+    // Here you would typically call an AI service to generate the 3D printer design
+    // For this example, we'll just set a placeholder response
+    setGeneratedDesign('3D printer design generated based on your prompt. CAD files are ready for download.')
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">3D Printer Creation</h1>
+      <div className="max-w-md">
+        <Textarea
+          placeholder="Describe your desired 3D printer..."
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          className="mb-4"
+        />
+        <Button onClick={handleGenerate}>Generate 3D Printer Design</Button>
+        {generatedDesign && (
+          <div className="mt-4 p-4 bg-muted rounded">
+            <p>{generatedDesign}</p>
+            <Button className="mt-2">Download CAD Files</Button>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
