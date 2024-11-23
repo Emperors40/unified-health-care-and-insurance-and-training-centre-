@@ -1,0 +1,103 @@
+'use client'
+
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Slider } from '@/components/ui/slider'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+export default function Production() {
+  const [productType, setProductType] = useState('')
+  const [capacity, setCapacity] = useState(1000)
+  const [automation, setAutomation] = useState(50)
+  const [description, setDescription] = useState('')
+  const [generatedLine, setGeneratedLine] = useState('')
+
+  const handleGenerate = () => {
+    if (productType && description) {
+      const efficiency = 85 + Math.floor(Math.random() * 10)
+      const setupTime = Math.floor(Math.random() * 5) + 2
+      setGeneratedLine(`AI-optimized smart production line created:
+        - Product Type: ${productType}
+        - Capacity: ${capacity} units/day
+        - Automation Level: ${automation}%
+        - Description: ${description}
+        Simulated efficiency: ${efficiency}%
+        Estimated setup time: ${setupTime} weeks`)
+    }
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-4">Smart Healthcare Production Line Creation</h1>
+      <Card>
+        <CardHeader>
+          <CardTitle>Design Your Production Line</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="productType">Product Type</Label>
+              <Select value={productType} onValueChange={setProductType}>
+                <SelectTrigger id="productType">
+                  <SelectValue placeholder="Select product type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="electronics">Electronics</SelectItem>
+                  <SelectItem value="automotive">Automotive</SelectItem>
+                  <SelectItem value="pharmaceuticals">Pharmaceuticals</SelectItem>
+                  <SelectItem value="food">Food & Beverage</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="capacity">Daily Capacity: {capacity} units</Label>
+              <Slider
+                id="capacity"
+                min={100}
+                max={10000}
+                step={100}
+                value={[capacity]}
+                onValueChange={(value) => setCapacity(value[0])}
+              />
+            </div>
+            <div>
+              <Label htmlFor="automation">Automation Level: {automation}%</Label>
+              <Slider
+                id="automation"
+                min={0}
+                max={100}
+                step={5}
+                value={[automation]}
+                onValueChange={(value) => setAutomation(value[0])}
+              />
+            </div>
+            <div>
+              <Label htmlFor="description">Specific Needs or Constraints</Label>
+              <Textarea
+                id="description"
+                placeholder="Describe any specific needs or constraints..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+            <Button onClick={handleGenerate}>Generate Smart Production Line</Button>
+            {generatedLine && (
+              <div className="mt-4 p-4 bg-muted rounded">
+                <p className="whitespace-pre-wrap">{generatedLine}</p>
+                <div className="mt-4 space-x-2">
+                  <Button onClick={() => alert('Opening 3D model viewer...')}>View 3D Model</Button>
+                  <Button onClick={() => alert('Running production simulation...')}>Run Simulation</Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
