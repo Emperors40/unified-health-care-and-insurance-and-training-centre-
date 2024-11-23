@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Healthcare App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #2980b9;
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 5px;
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .card {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .slider {
+            width: 100%;
+        }
+        #healthChart {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Futuristic Healthcare App</h1>
+    </header>
+    <nav>
+        <a href="#" onclick="showSection('home')">Home</a>
+        <a href="#" onclick="showSection('insurance')">AI Insurance</a>
+        <a href="#" onclick="showSection('training')">VR Training</a>
+        <a href="#" onclick="showSection('printer')">AI 3D Printer</a>
+        <a href="#" onclick="showSection('production')">Smart Production</a>
+        <a href="#" onclick="showSection('arvr')">AR/VR Guide</a>
+        <a href="#" onclick="showSection('health')">AI Health Dashboard</a>
+    </nav>
+    <div class="container">
+        <div id="home" class="content">
+            <h2>Welcome to the Futuristic Healthcare App</h2>
+            <p>Navigate through the sections using the menu above.</p>
+        </div>
+        <div id="insurance" class="content" style="display:none;">
+            <h2>AI-Powered Healthcare Insurance</h2>
+            <div class="card">
+                <h3>Personalized Insurance Quote</h3>
+                <label for="age">Age: <span id="ageValue">30</span></label>
+                <input type="range" id="age" min="18" max="80" value="30" class="slider">
+                <label for="healthScore">Health Score: <span id="healthScoreValue">70</span></label>
+                <input type="range" id="healthScore" min="0" max="100" value="70" class="slider">
+                <input type="email" id="insuranceEmail" placeholder="Enter your email">
+                <p>Premium: ₦<span id="premium">10000</span>/year</p>
+                <button onclick="subscribeInsurance()">Subscribe</button>
+            </div>
+            <div id="insuranceMessage"></div>
+        </div>
+        <div id="training" class="content" style="display:none;">
+            <h2>VR Training Center</h2>
+            <select id="productionLineSelect">
+                <option value="">Select a production line</option>
+            </select>
+            <button onclick="startTraining()">Start VR Training</button>
+            <div id="trainingProgress" style="display:none;">
+                <progress id="trainingProgressBar" value="0" max="100"></progress>
+                <p>Training Progress: <span id="trainingProgressValue">0</span>%</p>
+            </div>
+            <div id="trainingMessage"></div>
+        </div>
+        <div id="printer" class="content" style="display:none;">
+            <h2>AI 3D Printer Design</h2>
+            <textarea id="printerPrompt" placeholder="Describe your desired 3D printer..."></textarea>
+            <label for="printerSize">Print Size: <span id="printerSizeValue">200</span>mm</label>
+            <input type="range" id="printerSize" min="100" max="500" value="200" class="slider">
+            <label for="printerResolution">Print Resolution: <span id="printerResolutionValue">100</span> microns</label>
+            <input type="range" id="printerResolution" min="20" max="200" value="100" class="slider">
+            <button onclick="generate3DPrinter()">Generate 3D Printer Design</button>
+            <div id="printerDesign"></div>
+        </div>
+        <div id="production" class="content" style="display:none;">
+            <h2>Smart Production Line Creation</h2>
+            <select id="productType">
+                <option value="">Select product type</option>
+                <option value="electronics">Electronics</option>
+                <option value="automotive">Automotive</option>
+                <option value="pharmaceuticals">Pharmaceuticals</option>
+                <option value="food">Food & Beverage</option>
+            </select>
+            <label for="capacity">Daily Capacity: <span id="capacityValue">1000</span> units</label>
+            <input type="range" id="capacity" min="100" max="10000" value="1000" step="100" class="slider">
+            <label for="automation">Automation Level: <span id="automationValue">50</span>%</label>
+            <input type="range" id="automation" min="0" max="100" value="50" step="5" class="slider">
+            <textarea id="productionDescription" placeholder="Describe any specific needs or constraints..."></textarea>
+            <button onclick="generateProductionLine()">Generate Smart Production Line</button>
+            <div id="productionResult"></div>
+        </div>
+        <div id="arvr" class="content" style="display:none;">
+            <h2>AR/VR Assembly Guide</h2>
+            <div id="arvrView" style="width:100%;height:200px;background-color:#ddd;display:flex;justify-content:center;align-items:center;">
+                <p>AR/VR View Placeholder</p>
+            </div>
+            <div id="assemblyStep"></div>
+            <button onclick="previousStep()">Previous Step</button>
+            <button onclick="playPauseGuide()" id="playPauseButton">Play</button>
+            <button onclick="resetGuide()">Reset</button>
+            <button onclick="nextStep()">Next Step</button>
+        </div>
+        <div id="health" class="content" style="display:none;">
+            <h2>AI Health Dashboard</h2>
+            <div id="healthMetrics"></div>
+            <canvas id="healthChart"></canvas>
+            <div>
+                <button onclick="updateHealthChart('heartRate')">Heart Rate</button>
+                <button onclick="updateHealthChart('bloodPressure')">Blood Pressure</button>
+                <button onclick="updateHealthChart('steps')">Steps</button>
+                <button onclick="updateHealthChart('sleep')">Sleep</button>
+                <button onclick="updateHealthChart('calories')">Calories</button>
+                <button onclick="updateHealthChart('stressLevel')">Stress Level</button>
+            </div>
+            <button onclick="refreshHealthData()">Refresh Data</button>
+        </div>
+    </div>
+    <script>
+        // Navigation
+        function showSection(sectionId) {
+            const sections = ['home', 'insurance', 'training', 'printer', 'production', 'arvr', 'health'];
+            sections.forEach(id => {
+                document.getElementById(id).style.display = id === sectionId ? 'block' : 'none';
+            });
+            if (sectionId === 'training') populateProductionLines();
+            if (sectionId === 'health') refreshHealthData();
+            if (sectionId === 'arvr') resetGuide();
+        }
+
+        // Insurance
+        const ageSlider = document.getElementById('age');
+        const healthScoreSlider = document.getElementById('healthScore');
+        const premiumDisplay = document.getElementById('premium');
+
+        function updatePremium() {
+            const age = parseInt(ageSlider.value);
+            const healthScore = parseInt(healthScoreSlider.value);
+            const basePremium = 10000;
+            const ageFactor = age / 30;
+            const healthFactor = (100 - healthScore) / 50;
+            const premium = Math.round(basePremium * ageFactor * (1 + healthFactor));
+            premiumDisplay.textContent = premium;
+            document.getElementById('ageValue').textContent = age;
+            document.getElementById('healthScoreValue').textContent = healthScore;
+        }
+
+        ageSlider.oninput = updatePremium;
+        healthScoreSlider.oninput = updatePremium;
+
+        function subscribeInsurance() {
+            const email = document.getElementById('insuranceEmail').value;
+            if (email) {
+                document.getElementById('insuranceMessage').innerHTML = `Thank you for subscribing with email: ${email}. Your personalized premium is ₦${premiumDisplay.textContent}/year.`;
+            } else {
+                document.getElementById('insuranceMessage').innerHTML = 'Please enter a valid email.';
+            }
+        }
+
+        // Training Center
+        function populateProductionLines() {
+            const select = document.getElementById('productionLineSelect');
+            select.innerHTML = '<option value="">Select a production line</option>';
+            for (let i = 1; i <= 150; i++) {
+                const option = document.createElement('option');
+                option.value = `line-${i}`;
+                option.textContent = `Production Line ${i}`;
+                select.appendChild(option);
+            }
+        }
+
+        function startTraining() {
+            const selectedLine = document.getElementById('productionLineSelect').value;
+            if (selectedLine) {
+                document.getElementById('trainingProgress').style.display = 'block';
+                document.getElementById('trainingProgressBar').value = 0;
+                document.getElementById('trainingProgressValue').textContent = '0';
+                const interval = setInterval(() => {
+                    const progressBar = document.getElementById('trainingProgressBar');
+                    const progressValue = document.getElementById('trainingProgressValue');
+                    if (parseInt(progressBar.value) < 100) {
+                        progressBar.value = parseInt(progressBar.value) + 10;
+                        progressValue.textContent = progressBar.value;
+                    } else {
+                        clearInterval(interval);
+                        document.getElementById('trainingMessage').textContent = 'VR Training Complete!';
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('trainingMessage').textContent = 'Please select a production line.';
+            }
+        }
+
+        // 3D Printer Creation
+        const printerSizeSlider = document.getElementById('printerSize');
+        const printerResolutionSlider = document.getElementById('printerResolution');
+
+        printerSizeSlider.oninput = () => document.getElementById('printerSizeValue').textContent = printerSizeSlider.value;
+        printerResolutionSlider.oninput = () => document.getElementById('printerResolutionValue').textContent = printerResolutionSlider.value;
+
+        function generate3DPrinter() {
+            const prompt = document.getElementById('printerPrompt').value;
+            const size = printerSizeSlider.value;
+            const resolution = printerResolutionSlider.value;
+            if (prompt) {
+                document.getElementById('printerDesign').innerHTML = `
+                    <div class="card">
+                        <p>AI-generated 3D printer design based on your specifications:</p>
+                        <p>- Prompt: ${prompt}</p>
+                        <p>- Size: ${size}mm</p>
+                        <p>- Resolution: ${resolution} microns</p>
+                        <p>CAD files are ready for download and VR preview.</p>
+                        <button onclick="alert('Downloading CAD files...')">Download CAD Files</button>
+                        <button onclick="alert('Opening VR preview...')">View in VR</button>
+                    </div>
+                `;
+            } else {
+                document.getElementById('printerDesign').textContent = 'Please enter a description for your 3D printer.';
+            }
+        }
+
+        // Production Line Creation
+        const capacitySlider = document.getElementById('capacity');
+        const automationSlider = document.getElementById('automation');
+
+        capacitySlider.oninput = () => document.getElementById('capacityValue').textContent = capacitySlider.value;
+        automationSlider.oninput = () => document.getElementById('automationValue').textContent = automationSlider.value;
+
+        function generateProductionLine() {
+            const productType = document.getElementById('productType').value;
+            const capacity = capacitySlider.value;
+            const automation = automationSlider.value;
+            const description = document.getElementById('productionDescription').value;
+            if (productType && description) {
+                const efficiency = 85 + Math.floor(Math.random() * 10);
+                const setupTime = Math.floor(Math.random() * 5) + 2;
+                document.getElementById('productionResult').innerHTML = `
+                    <div class="card">
+                        <p>AI-optimized smart production line created:</p>
+                        <p>- Product Type: ${productType}</p>
+                        <p>- Capacity: ${capacity} units/day</p>
+                        <p>- Automation Level: ${automation}%</p>
+                        <p>- Description: ${description}</p>
+                        <p>Simulated efficiency: ${efficiency}%</p>
+                        <p>Estimated setup time: ${setupTime} weeks</p>
+                        <button onclick="alert('Opening 3D model viewer...')">View 3D Model</button>
+                        <button onclick="alert('Running production simulation...')">Run Simulation</button>
+                    </div>
+                `;
+            } else {
+                document.getElementById('productionResult').textContent = 'Please select a product type and enter a description.';
+            }
+        }
+
+        // AR/VR Assembly Guide
+        const assemblySteps =
+[
+            "Place the 3D printed base on a flat surface.",
+            "Attach the main support structure to the base.",
+            "Connect the electronic components to the main board.",
+            "Secure the print head to the support structure.",
+            "Install the filament feeding mechanism.",
+            "Calibrate the printer bed and test the movements."
+        ];
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval;
+
+        function showAssemblyStep() {
+            document.getElementById('assemblyStep').innerHTML = `
+                <div class="card">
+                    <h3>Step ${currentStep + 1}</h3>
+                    <p>${assemblySteps[currentStep]}</p>
+                </div>
+            `;
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showAssemblyStep();
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < assemblySteps.length - 1) {
+                currentStep++;
+                showAssemblyStep();
+            } else {
+                stopGuide();
+            }
+        }
+
+        function playPauseGuide() {
+            if (isPlaying) {
+                stopGuide();
+            } else {
+                isPlaying = true;
+                document.getElementById('playPauseButton').textContent = 'Pause';
+                playInterval = setInterval(nextStep, 3000);
+            }
+        }
+
+        function stopGuide() {
+            isPlaying = false;
+            document.getElementById('playPauseButton').textContent = 'Play';
+            clearInterval(playInterval);
+        }
+
+        function resetGuide() {
+            stopGuide();
+            currentStep = 0;
+            showAssemblyStep();
+        }
+
+        // Health Dashboard
+        let healthData = [];
+        let healthChart;
+
+        function generateHealthData() {
+            return Array.from({ length: 7 }, (_, i) => ({
+                day: i + 1,
+                heartRate: Math.floor(Math.random() * (100 - 60) + 60),
+                bloodPressure: Math.floor(Math.random() * (140 - 110) + 110),
+                steps: Math.floor(Math.random() * (15000 - 5000) + 5000),
+                sleep: Math.floor(Math.random() * (10 - 5) + 5),
+                calories: Math.floor(Math.random() * (3000 - 1500) + 1500),
+                stressLevel: Math.floor(Math.random() * 100),
+            }));
+        }
+
+        function refreshHealthData() {
+            healthData = generateHealthData();
+            updateHealthDashboard();
+            updateHealthChart('heartRate');
+        }
+
+        function updateHealthDashboard() {
+            const latestData = healthData[healthData.length - 1];
+            document.getElementById('healthMetrics').innerHTML = `
+                <div class="card">
+                    <h3>Heart Rate</h3>
+                    <p>${latestData.heartRate} bpm</p>
+                </div>
+                <div class="card">
+                    <h3>Blood Pressure</h3>
+                    <p>${latestData.bloodPressure}/80 mmHg</p>
+                </div>
+                <div class="card">
+                    <h3>Steps Today</h3>
+                    <p>${latestData.steps.toLocaleString()}</p>
+                </div>
+                <div class="card">
+                    <h3>Sleep</h3>
+                    <p>${latestData.sleep}h</p>
+                </div>
+                <div class="card">
+                    <h3>Calories Burned</h3>
+                    <p>${latestData.calories} kcal</p>
+                </div>
+                <div class="card">
+                    <h3>Stress Level</h3>
+                    <p>${latestData.stressLevel}%</p>
+                </div>
+            `;
+        }
+
+        function updateHealthChart(metric) {
+            const ctx = document.getElementById('healthChart').getContext('2d');
+            if (healthChart) {
+                healthChart.destroy();
+            }
+            healthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: healthData.map(d => `Day ${d.day}`),
+                    datasets: [{
+                        label: metric,
+                        data: healthData.map(d => d[metric]),
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize
+        showSection('home');
+    </script>
+</body>
+</html>
+
